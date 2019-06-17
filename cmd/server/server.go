@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"flag"
 	"fmt"
 	log "github.com/sirupsen/logrus"
 	"net"
@@ -19,16 +20,26 @@ type chat struct {
 }
 
 var (
+	host string
+
 	chats = make(map[string]*chat)
 	mutex = &sync.Mutex{}
 )
 
 func main() {
+	// 解析命令行参数
+	flag.StringVar(&host, "h", ":9468", "listen address (ip:port)")
+	flag.Parse()
+	if host == "" {
+		flag.Usage()
+		return
+	}
+
 	log.SetLevel(log.DebugLevel)
-	address := ":9468"
-	listen, err := net.Listen("tcp", address)
+
+	listen, err := net.Listen("tcp", host)
 	if err != nil {
-		log.Error("Fail to listen address: ", address)
+		log.Error("Fail to listen address: ", host)
 		return
 	}
 

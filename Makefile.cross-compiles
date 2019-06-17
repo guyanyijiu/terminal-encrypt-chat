@@ -1,0 +1,22 @@
+version = master
+
+all: build
+
+build:
+	env CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o ./bin/darwin_amd64/server ./cmd/server
+	env CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o ./bin/darwin_amd64/client ./cmd/client
+	env CGO_ENABLED=0 GOOS=linux GOARCH=386 go build -o ./bin/linux_386/server ./cmd/server
+	env CGO_ENABLED=0 GOOS=linux GOARCH=386 go build -o ./bin/linux_386/client ./cmd/client
+	env CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ./bin/linux_amd64/server ./cmd/server
+	env CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ./bin/linux_amd64/client ./cmd/client
+	env CGO_ENABLED=0 GOOS=windows GOARCH=386 go build -o ./bin/windows_386/server.exe ./cmd/server
+	env CGO_ENABLED=0 GOOS=windows GOARCH=386 go build -o ./bin/windows_386/client.exe ./cmd/client
+	env CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -o ./bin/windows_amd64/server.exe ./cmd/server
+	env CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -o ./bin/windows_amd64/client.exe ./cmd/client
+
+compress: build
+	tar -zcvf ./bin/darwin_amd64_$(version).tar.gz ./bin/darwin_amd64
+	tar -zcvf ./bin/linux_386_$(version).tar.gz ./bin/linux_386
+	tar -zcvf ./bin/linux_amd64_$(version).tar.gz ./bin/linux_amd64
+	tar -zcvf ./bin/windows_386_$(version).tar.gz ./bin/windows_386
+	tar -zcvf ./bin/windows_amd64_$(version).tar.gz ./bin/windows_amd64
