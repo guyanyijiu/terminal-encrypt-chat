@@ -20,6 +20,8 @@
 ./client -i=ID -h=ip:port
 ```
 
+可以使用 `106.75.96.11:9468` 测试
+
 # Download
 
 去 [Releases](https://github.com/guyanyijiu/terminal-encrypt-chat/releases) 页面下载编译好的可执行文件
